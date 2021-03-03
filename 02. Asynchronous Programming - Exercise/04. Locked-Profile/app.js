@@ -8,9 +8,8 @@ async function lockedProfile() {
 
     function displayAllProfiles(profiles) {
         let mainDiv = document.querySelector('#main');
-        console.log(profiles)
 
-        let counter = 2;
+        let counter = 2; // start from 2 because there is already 1 static profile
         Object.entries(profiles)
             .forEach(([key, value]) => {
                 mainDiv.appendChild(createProfile(value, counter));
@@ -19,7 +18,6 @@ async function lockedProfile() {
     }
 
     function createProfile(profile, counter) {
-        console.log(profile);
 
         const currentProfile = e('div', { className: 'profile' },
                                    e('img', { src: './iconProfile2.png', className: 'userIcon' }),
