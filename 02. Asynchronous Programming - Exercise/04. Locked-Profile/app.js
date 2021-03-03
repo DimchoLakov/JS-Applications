@@ -25,8 +25,7 @@ async function lockedProfile() {
                                    e('img', { src: './iconProfile2.png', className: 'userIcon' }),
                                    e('label', {}, 'Lock '),
                                    e('input', { type: 'radio', name: `user${counter}Locked`, value: 'lock', checked: 'checked' }),
-                                   e('br'),
-                                   e('label', {}, 'Unlock '),
+                                   e('label', {}, ' Unlock '),
                                    e('input', { type: 'radio', name: `user${counter}Locked`, value: 'unlock' }),
                                    e('br'),
                                    e('hr'),
@@ -41,24 +40,6 @@ async function lockedProfile() {
                                    e('button', { onClick: showHideUserInfo }, 'Show more'));
 
         return currentProfile;
-        // <div class="profile">
-        // 		<img src="./iconProfile2.png" class="userIcon" />
-        // 		<label>Lock</label>
-        // 		<input type="radio" name="user1Locked" value="lock" checked>
-        // 		<label>Unlock</label>
-        // 		<input type="radio" name="user1Locked" value="unlock"><br>
-        // 		<hr>
-        // 		<label>Username</label>
-        // 		<input type="text" name="user1Username" value="" disabled readonly />
-        // 		<div id="user1HiddenFields">
-        // 			<hr>
-        // 			<label>Email:</label>
-        // 			<input type="email" name="user1Email" value="" disabled readonly />
-        // 			<label>Age:</label>
-        // 			<input type="email" name="user1Age" value="" disabled readonly />
-        // 		</div>
-        // 		<button>Show more</button>
-        // 	</div>
     }
 
     function showHideUserInfo(event) {
@@ -66,12 +47,7 @@ async function lockedProfile() {
 
         let lockInput = this.parentNode.querySelector('input[value="lock"]');
         let unlockInput = this.parentNode.querySelector('input[value="unlock"]');
-
-        let indexOfDivHiddenInfo = 9;
-        if (this.parentNode.children.length > 11) {
-            indexOfDivHiddenInfo = 10;
-        }
-        let divHiddenUserInfo = this.parentNode.children[indexOfDivHiddenInfo];
+        let divHiddenUserInfo = this.parentNode.children[9];
 
         if (!lockInput.checked) {
             if (this.textContent.toLowerCase() === 'show more'.toLocaleLowerCase()) {
