@@ -43,3 +43,46 @@ table tbody tr:nth-child(even) button{
 table tr:hover{
     text-decoration: underline;
 }
+
+form {
+    margin: 50px auto 0 auto;
+    width: 70%;
+}
+
+form h3 {
+    text-align: center;
+    text-decoration: underline;
+    text-transform: uppercase;
+}
+
+form input {
+    font-size: 16px;
+    padding: 10px;
+}
+
+form input:not(:last-child) {
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+form button {
+    display: block;
+    background-color: #234465;
+    color: white;
+    font-size: 20px;
+    margin: 10px 0 5px auto;
+    padding: 5px 90px;
+    border-radius: 5px;
+}
+
+.form-group {
+    display: flex;
+    justify-content: space-around;
+    flex-flow: row wrap;
+}
+
+#error {
+    color: red;
+    font-size: 32px;
+    text-align: center;
+}
