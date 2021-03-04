@@ -1,18 +1,17 @@
 window.addEventListener('load', async function (event) {
-    await loadStudents(event);
+    await loadStudents();
 
-    const formCreateStudent = document.querySelector('#CreateStudentForm');
+    const formCreateStudent = document.querySelector('#form');
     formCreateStudent.addEventListener('submit', createStudent);
 });
 
-async function loadStudents(event) {
-    event.preventDefault();
-
+async function loadStudents() {
     const response = await fetch('http://localhost:3030/jsonstore/collections/students');
     const data = await response.json();
-    console.log(data);
 
-    const tableResults = document.querySelector('#results tbody');
+    const tableTBody = document.querySelector('#results tbody');
+    tableTBody.innerHTML = '';
+    
     let students = Object.values(data);
     for (const student of students) {
         let tr = e('tr', {});
@@ -25,7 +24,7 @@ async function loadStudents(event) {
         tr.appendChild(tdLastName);
         tr.appendChild(tdFacultyNumber);
         tr.appendChild(tdGrade);
-        tableResults.append(tr);
+        tableTBody.append(tr);
     }
 
 }
@@ -36,18 +35,20 @@ async function createStudent(event) {
     const formData = new FormData(event.target);
     let firstName = formData.get('firstName');
     let lastName = formData.get('lastName');
-    let facultyNumber = formData.get('facultyNumber');
-    let grade = formData.get('grade');
+    let facultyNumber = Number(formData.get('facultyNumber'));
+    let grade = Number(formData.get('grade'));
 
-    let divError = document.querySelector('#error');
+    let divNotification = document.querySelector('.notification');
 
     let areAnyInputsEmpty = [...formData].some(x => x[1] === '');
-    if (areAnyInputsEmpty) {
-        divError.textContent = 'All field are required!';
+
+    if (areAnyInputsEmpty ||
+        typeof grade !== 'number') {
+        divNotification.textContent = 'All field are required! Faculty Number and Grade must be numbers!';
 
         return false;
     } else {
-        divError.textContent = '';
+        divNotification.textContent = '';
 
         const response = await fetch('http://localhost:3030/jsonstore/collections/students', {
             method: 'POST',
@@ -62,8 +63,8 @@ async function createStudent(event) {
             })
         });
 
-        console.log(await response.text())
-        
+        await loadStudents();
+
         event.target.reset();
     }
 }
