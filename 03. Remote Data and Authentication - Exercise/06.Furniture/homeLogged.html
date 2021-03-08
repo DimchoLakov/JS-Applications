@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <link rel="stylesheet" href="static/style.css">
+    <link rel="stylesheet" href="./static/style.css">
     <title>FURNITURE</title>
 </head>
 
@@ -10,14 +10,14 @@
     <header>
         <h1>Furniture List</h1>
         <nav>
-            <a class="active">Catalog</a>
+            <a href="./home.html">Catalog</a>
             <div id="user">
+                <a class="active">Create Product</a>
                 <a id="logoutBtn" href="javascript:void(0)">Logout</a>
             </div>
-            <!-- <div id="guest">
-                <a href="login.html">Login</a>
-                <a href="register.html">Register</a>
-            </div> -->
+            <div id="guest">
+                <a href="./login.html">Login</a>
+            </div>
         </nav>
     </header>
     <main>
@@ -33,7 +33,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <h2>Create Product</h2>
-                                <form action="" method="post">
+                                <form action="" method="post" id="CreateProductForm">
                                     <label>Name: <input type="text" name="name"></label>
                                     <label>Price: <input type="text" name="price"></label>
                                     <label>Factor: <input type="text" name="factor"></label>
@@ -67,7 +67,7 @@
                                                 <p>0.5</p>
                                             </td>
                                             <td>
-                                                <input type="checkbox"/>
+                                                <input type="checkbox" />
                                             </td>
                                         </tr>
                                         <tr>
@@ -85,16 +85,16 @@
                                                 <p>1.2</p>
                                             </td>
                                             <td>
-                                                <input type="checkbox"/>
+                                                <input type="checkbox" />
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
-                                <button>Buy</button>
+                                <button id="BuyButton">Buy</button>
                                 <hr>
                                 <div class="orders">
-                                    <p>Bought furniture: <span>Office chair, Sofa</span></p>
-                                    <p>Total price: <span>419 $</span></p>
+                                    <p>Bought furniture: <span id="productNames">Office chair, Sofa</span></p>
+                                    <p>Total price: <span id="productPrice">419 $</span></p>
                                     <button>All orders</button>
                                 </div>
                             </div>
@@ -106,7 +106,8 @@
             </div>
         </div>
     </main>
-    <script src="solution.js"></script>
+    <script src="./solution.js"></script>
+    <script src="./logout.js"></script>
 </body>
 
 </html>
