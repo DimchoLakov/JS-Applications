@@ -1,33 +1,34 @@
-const form = document.querySelector('form');
+let loginForm = document.querySelector('form');
+loginForm.addEventListener('submit', login);
 
-form.addEventListener('submit', (ev => {
-    ev.preventDefault();
-    const formData = new FormData(ev.target);
-    onSubmit([...formData.entries()].reduce((p, [k, v]) => Object.assign(p, { [k]: v }), {}));
-}));
+async function login(event) {
+    event.preventDefault();
 
-async function onSubmit(data) {
-    const body = JSON.stringify({
-        email: data.email,
-        password: data.password,
-    });
+    let formData = new FormData(event.target);
+    let email = formData.get('email');
+    let password = formData.get('password');
 
     try {
         const response = await fetch('http://localhost:3030/users/login', {
-            method: 'post',
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body
+            body: JSON.stringify({
+                email,
+                password
+            })
         });
-        const data = await response.json();
-        if (response.status == 200) {
-            sessionStorage.setItem('authToken', data.accessToken);
-            window.location.pathname = 'index.html';
+
+        if (!response.ok) {
+            throw new Error(response.statusText);
         } else {
-            throw new Error(data.message);
+            const data = await response.json();
+            sessionStorage.setItem('authToken', data.accessToken);
+            window.location.href = './index.html';
         }
-    } catch (err) {
-        console.error(err.message);
+    } catch (error) {
+        console.log(error.message);
+        alert(error.message);
     }
 }

@@ -1,37 +1,44 @@
-const form = document.querySelector('form');
+let registerForm = document.querySelector('form');
+registerForm.addEventListener('submit', register);
 
-form.addEventListener('submit', (ev => {
-    ev.preventDefault();
-    const formData = new FormData(ev.target);
-    onSubmit([...formData.entries()].reduce((p, [k, v]) => Object.assign(p, { [k]: v }), {}));
-}));
+async function register(event) {
+    event.preventDefault();
 
-async function onSubmit(data) {
-    if (data.password != data.rePass) {
-        return console.error('Passwords don\'t match');
+    let formData = new FormData(event.target);
+    let email = formData.get('email');
+    let password = formData.get('password');
+    let confirmPassword = formData.get('rePass');
+
+    if (password !== confirmPassword) {
+        let message = 'Passwords do not match!';
+
+        console.log(message);
+        alert(message);
+
+        return false;
     }
-
-    const body = JSON.stringify({
-        email: data.email,
-        password: data.password,
-    });
 
     try {
         const response = await fetch('http://localhost:3030/users/register', {
-            method: 'post',
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body
+            body: JSON.stringify({
+                email,
+                password
+            })
         });
-        const data = await response.json();
-        if (response.status == 200) {
-            sessionStorage.setItem('authToken', data.accessToken);
-            window.location.pathname = 'index.html';
-        } else {
-            throw new Error(data.message);
+
+        if (!response.ok) {
+            throw new Error(response.statusText);
         }
-    } catch (err) {
-        console.error(err.message);
+
+        const data = await response.json();
+        sessionStorage.setItem('authToken', data.accessToken);
+        window.location.href = './index.html';
+    } catch (error) {
+        console.log(error.message);
+        alert(error.message);
     }
 }

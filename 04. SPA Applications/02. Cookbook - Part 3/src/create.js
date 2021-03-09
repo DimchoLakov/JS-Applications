@@ -3,6 +3,11 @@ const form = document.querySelector('form');
 form.addEventListener('submit', (ev => {
     ev.preventDefault();
     const formData = new FormData(ev.target);
+    let isAnyInputEmpty = [...formData].some(x => x[1] === '');
+    if (isAnyInputEmpty) {
+        alert('All field are required and cannot be empty!');
+        return false;
+    }
     onSubmit([...formData.entries()].reduce((p, [k, v]) => Object.assign(p, { [k]: v }), {}));
 }));
 
@@ -28,9 +33,9 @@ async function onSubmit(data) {
             },
             body
         });
-        
+
         if (response.status == 200) {
-            window.location.pathname = 'index.html';
+            window.location.href = './index.html';
         } else {
             throw new Error(await response.json());
         }
