@@ -1,5 +1,23 @@
-let registerForm = document.querySelector('form');
-registerForm.addEventListener('submit', register);
+let main;
+let registerSection;
+let onSuccess;
+let setActiveNav;
+
+export function setupRegister(mainTargetElement, registerTargetSection, onSuccessTarget, onActiveNav) {
+    main = mainTargetElement;
+    registerSection = registerTargetSection;
+    onSuccess = onSuccessTarget;
+    setActiveNav = onActiveNav;
+
+    let registerForm = registerSection.querySelector('form');
+    registerForm.addEventListener('submit', register);
+}
+
+export function showRegister() {
+    main.innerHTML = '';
+    main.appendChild(registerSection);
+    setActiveNav('RegisterButton');
+}
 
 async function register(event) {
     event.preventDefault();
@@ -36,7 +54,9 @@ async function register(event) {
 
         const data = await response.json();
         sessionStorage.setItem('authToken', data.accessToken);
-        window.location.href = './index.html';
+        
+        event.target.reset();
+        onSuccess();
     } catch (error) {
         console.log(error.message);
         alert(error.message);

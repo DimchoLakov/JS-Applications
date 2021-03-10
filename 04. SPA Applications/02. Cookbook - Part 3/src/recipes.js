@@ -1,5 +1,23 @@
-const createRecipeForm = document.querySelector('form');
-createRecipeForm.addEventListener('submit', createNewRecipe);
+let main;
+let createRecipeSection;
+let onSuccess;
+let setActiveNav;
+
+export function setupCreateRecipe(mainTargetElement, createRecipeTargetSection, onSuccessTarget, onActiveNav) {
+    main = mainTargetElement;
+    createRecipeSection = createRecipeTargetSection;
+    onSuccess = onSuccessTarget;
+    setActiveNav = onActiveNav;
+
+    const createRecipeForm = document.querySelector('form');
+    createRecipeForm.addEventListener('submit', createNewRecipe);
+}
+
+export function showCreateRecipe() {
+    main.innerHTML = '';
+    main.appendChild(createRecipeSection);
+    setActiveNav('CreateRecipeButton');
+}
 
 async function createNewRecipe(event) {
     event.preventDefault();
@@ -25,11 +43,15 @@ async function createNewRecipe(event) {
             body
         });
 
-        if (response.ok) {
-            window.location.href = './index.html';
-        } else {
-            throw new Error(await response.json());
+        if (!response.ok) {
+            throw new Error(response.statusText);
         }
+        
+        const data = await response.json();
+        sessionStorage.setItem('ownerId', data._ownerId);
+        event.target.reset();
+
+        onSuccess();
     } catch (error) {
         console.log(error.message);
     }

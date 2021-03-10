@@ -1,9 +1,4 @@
-const logoutButton = document.querySelector('#logoutBtn');
-logoutButton.addEventListener('click', logout);
-
-function logout(event) {
-    event.preventDefault();
-
+export function logout(onSuccess) {
     sessionStorage.clear();
-    window.location.href = './index.html';
+    onSuccess();
 }

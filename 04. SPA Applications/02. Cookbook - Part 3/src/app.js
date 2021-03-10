@@ -1,103 +1,72 @@
+import { setupCatalog, showCatalog } from './catalog.js';
+import { setupLogin, showLogin } from './login.js';
+import { setupRegister, showRegister } from './register.js';
+import { setupCreateRecipe, showCreateRecipe } from './recipes.js';
+import { logout } from './logout.js';
+import { displayNavMenu } from './nav.js';
+
 window.addEventListener('load', async () => {
     const main = document.querySelector('main');
 
-    const recipes = await getRecipes();
-    const cards = recipes.map(createRecipePreview);
+    const catalogSection = document.querySelector('#CatalogSection');
+    setupCatalog(main, catalogSection, setActiveNav);
 
-    main.innerHTML = '';
-    cards.forEach(c => main.appendChild(c));
+    // App starts here
+    await showCatalog(main, catalogSection);
+
+    const loginSection = document.querySelector('#LoginSection');
+    setupLogin(main, loginSection, showMainScreen, setActiveNav);
+
+    const registerSection = document.querySelector('#RegisterSection');
+    setupRegister(main, registerSection, showMainScreen, setActiveNav);
+
+    const createRecipeSection = document.querySelector('#CreateRecipeSection');
+    setupCreateRecipe(main, createRecipeSection, showMainScreen, setActiveNav);
+
+    const catalogButton = document.querySelector('#CatalogButton');
+    catalogButton.addEventListener('click', async (event) => {
+        event.preventDefault();
+
+        await showCatalog();
+    });
+
+    const loginButton = document.querySelector('#LoginButton');
+    loginButton.addEventListener('click', (event) => {
+        event.preventDefault();
+
+        showLogin();
+    });
+
+    const registerButton = document.querySelector('#RegisterButton');
+    registerButton.addEventListener('click', (event) => {
+        event.preventDefault();
+
+        showRegister();
+    });
+
+    const createRecipeButton = document.querySelector('#CreateRecipeButton');
+    createRecipeButton.addEventListener('click', (event) => {
+        event.preventDefault();
+
+        showCreateRecipe();
+    });
+
+    const logoutButton = document.querySelector('#LogoutButton');
+    logoutButton.addEventListener('click', (event) => {
+        event.preventDefault();
+
+        logout(showMainScreen);
+    });
 
     displayNavMenu();
 });
 
-async function getRecipes() {
-    const response = await fetch('http://localhost:3030/jsonstore/cookbook/recipes');
-    const recipes = await response.json();
-
-    return Object.values(recipes);
+async function showMainScreen() {
+    displayNavMenu();
+    await showCatalog();
 }
 
-async function getRecipeById(id) {
-    const response = await fetch('http://localhost:3030/jsonstore/cookbook/details/' + id);
-    const recipe = await response.json();
-
-    return recipe;
-}
-
-function createRecipePreview(recipe) {
-    const result = e('article', { className: 'preview', onClick: toggleCard },
-        e('div', { className: 'title' }, e('h2', {}, recipe.name)),
-        e('div', { className: 'small' }, e('img', { src: recipe.img })),
-    );
-
-    return result;
-
-    async function toggleCard() {
-        const fullRecipe = await getRecipeById(recipe._id);
-
-        result.replaceWith(createRecipeCard(fullRecipe));
-    }
-}
-
-function createRecipeCard(recipe) {
-    const result = e('article', {},
-        e('h2', {}, recipe.name),
-        e('div', { className: 'band' },
-            e('div', { className: 'thumb' }, e('img', { src: recipe.img })),
-            e('div', { className: 'ingredients' },
-                e('h3', {}, 'Ingredients:'),
-                e('ul', {}, recipe.ingredients.map(i => e('li', {}, i))),
-            )
-        ),
-        e('div', { className: 'description' },
-            e('h3', {}, 'Preparation:'),
-            recipe.steps.map(s => e('p', {}, s))
-        ),
-    );
-
-    return result;
-}
-
-function isUserLoggedIn() {
-    let authorizationToken = sessionStorage.getItem('authToken');
-
-    return authorizationToken !== null;
-}
-
-function displayNavMenu() {
-    let divUser = document.querySelector('#user');
-    let divGuest = document.querySelector('#guest');
-
-    if (isUserLoggedIn()) {
-        divUser.style.display = 'inline-block';
-        divGuest.style.display = 'none';
-    } else {
-        divUser.style.display = 'none';
-        divGuest.style.display = 'inline-block';
-    }
-}
-
-function e(type, attributes, ...content) {
-    const result = document.createElement(type);
-
-    for (let [attr, value] of Object.entries(attributes || {})) {
-        if (attr.substring(0, 2) == 'on') {
-            result.addEventListener(attr.substring(2).toLocaleLowerCase(), value);
-        } else {
-            result[attr] = value;
-        }
-    }
-
-    content = content.reduce((a, c) => a.concat(Array.isArray(c) ? c : [c]), []);
-
-    content.forEach(e => {
-        if (typeof e == 'string' || typeof e == 'number') {
-            const node = document.createTextNode(e);
-            result.appendChild(node);
-        } else {
-            result.appendChild(e);
-        }
-    });
-
-    return result;
+function setActiveNav(targetId) {
+    let nav = document.querySelector('nav');
+    [...nav.querySelectorAll('a')].forEach(a => a.id == targetId ? a.classList.add('active') : a.classList.remove('active'));
 }

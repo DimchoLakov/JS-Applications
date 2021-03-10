@@ -1,5 +1,23 @@
-let loginForm = document.querySelector('form');
-loginForm.addEventListener('submit', login);
+let main;
+let loginSection;
+let onSuccess;
+let setActiveNav;
+
+export function setupLogin(mainTargetElement, loginTargetSection, onSuccessTarget, onActiveNav) {
+    main = mainTargetElement;
+    loginSection = loginTargetSection;
+    onSuccess = onSuccessTarget;
+    setActiveNav = onActiveNav
+
+    let loginForm = loginSection.querySelector('form');
+    loginForm.addEventListener('submit', login);
+}
+
+export function showLogin() {
+    main.innerHTML = '';
+    main.appendChild(loginSection);
+    setActiveNav('LoginButton');
+}
 
 async function login(event) {
     event.preventDefault();
@@ -22,11 +40,13 @@ async function login(event) {
 
         if (!response.ok) {
             throw new Error(response.statusText);
-        } else {
-            const data = await response.json();
-            sessionStorage.setItem('authToken', data.accessToken);
-            window.location.href = './index.html';
         }
+
+        const data = await response.json();
+        sessionStorage.setItem('authToken', data.accessToken);
+        
+        event.target.reset();
+        onSuccess();
     } catch (error) {
         console.log(error.message);
         alert(error.message);
