@@ -1,4 +1,4 @@
-function isUserLoggedIn() {
+export function isUserLoggedIn() {
     let authorizationToken = sessionStorage.getItem('authToken');
 
     return authorizationToken !== null;

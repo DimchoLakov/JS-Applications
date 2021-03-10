@@ -2,6 +2,8 @@ import { setupCatalog, showCatalog } from './catalog.js';
 import { setupLogin, showLogin } from './login.js';
 import { setupRegister, showRegister } from './register.js';
 import { setupCreateRecipe, showCreateRecipe } from './recipes.js';
+import { setupDetails } from './recipeDetails.js';
+import { setupEdit } from './editRecipe.js';
 import { logout } from './logout.js';
 import { displayNavMenu } from './nav.js';
 
@@ -22,6 +24,12 @@ window.addEventListener('load', async () => {
 
     const createRecipeSection = document.querySelector('#CreateRecipeSection');
     setupCreateRecipe(main, createRecipeSection, showMainScreen, setActiveNav);
+
+    const detailsSection = document.querySelector('#RecipeDetails');
+    setupDetails(main, detailsSection, setActiveNav);
+
+    const editRecipeSection = document.querySelector('#EditRecipe');
+    setupEdit(main, editRecipeSection, setActiveNav);
 
     const catalogButton = document.querySelector('#CatalogButton');
     catalogButton.addEventListener('click', async (event) => {

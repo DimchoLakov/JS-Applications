@@ -49,6 +49,7 @@ async function createNewRecipe(event) {
         
         const data = await response.json();
         sessionStorage.setItem('ownerId', data._ownerId);
+        
         event.target.reset();
 
         onSuccess();
