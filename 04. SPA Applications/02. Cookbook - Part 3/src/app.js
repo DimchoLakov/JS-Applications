@@ -12,7 +12,7 @@ window.addEventListener('load', async () => {
     setupCatalog(main, catalogSection, setActiveNav);
 
     // App starts here
-    await showCatalog(main, catalogSection);
+    await showCatalog();
 
     const loginSection = document.querySelector('#LoginSection');
     setupLogin(main, loginSection, showMainScreen, setActiveNav);
