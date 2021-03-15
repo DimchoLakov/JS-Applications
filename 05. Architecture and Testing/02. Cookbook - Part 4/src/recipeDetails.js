@@ -41,7 +41,7 @@ function createRecipeCard(recipe) {
     );
 
     if (isUserLoggedIn() &&
-        sessionStorage.getItem('ownerId') === recipe._ownerId) {
+        sessionStorage.getItem('userId') === recipe._ownerId) {
         let divControls = e('div', { className: 'controls' },
             e('button', { onClick: () => showEdit(recipe._id), className: 'recipeButton' }, '\u270E Edit'),
             e('button', { onClick: onDelete, className: 'recipeButton' }, '\u2716 Delete'));

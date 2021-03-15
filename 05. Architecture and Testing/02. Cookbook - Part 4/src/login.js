@@ -44,6 +44,7 @@ async function login(event) {
 
         const data = await response.json();
         sessionStorage.setItem('authToken', data.accessToken);
+        sessionStorage.setItem('userId', data._id);
         
         event.target.reset();
         onSuccess();

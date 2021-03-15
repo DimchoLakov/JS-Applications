@@ -54,6 +54,7 @@ async function register(event) {
 
         const data = await response.json();
         sessionStorage.setItem('authToken', data.accessToken);
+        sessionStorage.setItem('userId', data._id);
         
         event.target.reset();
         onSuccess();
