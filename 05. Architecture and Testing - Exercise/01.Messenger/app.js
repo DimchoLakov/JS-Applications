@@ -15,7 +15,8 @@ function attachEvents() {
 attachEvents();
 
 
-async function getMessages() {
+async function getMessages(event) {
+    event.preventDefault();
     const response = await fetch('http://localhost:3030/jsonstore/messenger');
     const data = await response.json();
 
