@@ -34,8 +34,10 @@ function getOptions(method = 'GET', data) {
     }
 
     if (data) {
-        options.headers['Content-Type'] = 'application/json';
-        options.body = JSON.stringify(data);
+        if (Object.entries(data).length !== 0) {
+            options.headers['Content-Type'] = 'application/json';
+            options.body = JSON.stringify(data);
+        }
     }
 
     return options;
@@ -78,11 +80,11 @@ export async function register(email, password) {
 }
 
 export async function logout() {
-    const result = await get(settings.host + '/users/logout');
+    // const result = await get(settings.host + '/users/logout', getOptions('GET', {}));
 
     sessionStorage.removeItem('email');
     sessionStorage.removeItem('authToken');
     sessionStorage.removeItem('userId');
 
-    return result;
+    // return result;
 }

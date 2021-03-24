@@ -60,6 +60,7 @@ export function registerPage(ctx) {
 
         await api.register(email, password);
 
+        ctx.setNavigation();        
         ctx.page.redirect('/');
     }
 }

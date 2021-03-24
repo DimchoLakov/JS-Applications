@@ -47,7 +47,8 @@ export function loginPage(ctx) {
         }
 
         await api.login(email, password);
-
+        
+        ctx.setNavigation();
         ctx.page.redirect('/');
     }
 }

@@ -25,6 +25,8 @@ const itemTemplate = (furniture) => html`
 `;
 
 export async function dashboardPage(ctx) {
+    ctx.setNavigation();
+    
     const data = await api.getAllFurnitures();
     
     ctx.render(dashboardTemplate(data));
