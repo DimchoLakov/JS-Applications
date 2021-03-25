@@ -39,6 +39,7 @@ const registerTemplate = (onSubmit, errorMessage, isEmailInvalid, isPasswordInva
 
 export function registerPage(ctx) {
     ctx.render(registerTemplate(onSubmit));
+    ctx.setActiveLink('registerLink');
 
     async function onSubmit(event) {
         event.preventDefault();

@@ -33,6 +33,7 @@ const loginTemplate = (onSubmit, errorMessage, isEmailInvalid, isPasswordInvalid
 
 export function loginPage(ctx) {
     ctx.render(loginTemplate(onSubmit));
+    ctx.setActiveLink('loginLink');
 
     async function onSubmit(event) {
         event.preventDefault();
@@ -47,7 +48,7 @@ export function loginPage(ctx) {
         }
 
         await api.login(email, password);
-        
+
         ctx.setNavigation();
         ctx.page.redirect('/');
     }

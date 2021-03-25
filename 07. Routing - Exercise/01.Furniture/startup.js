@@ -31,6 +31,7 @@ page.start();
 function configureContext(ctx, next) {
     ctx.render = (content) => render(content, mainConteiner);
     ctx.setNavigation = setNavigation;
+    ctx.setActiveLink = setActiveLink;
     next();
 }
 
@@ -43,4 +44,13 @@ function setNavigation() {
         document.querySelector('#user').style.display = 'none';
         document.querySelector('#guest').style.display = 'inline-block';
     }
+}
+
+function setActiveLink(elementId) {
+    const navLinks = [...document.querySelectorAll('nav a')];
+    navLinks.forEach(e => e.classList.remove('active'));
+
+    console.log(navLinks)
+    const activeLink = navLinks.find(e => e.id === elementId);
+    activeLink.classList.add('active');
 }

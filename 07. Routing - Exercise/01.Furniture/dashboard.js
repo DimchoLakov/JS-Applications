@@ -26,6 +26,7 @@ const itemTemplate = (furniture) => html`
 
 export async function dashboardPage(ctx) {
     ctx.setNavigation();
+    ctx.setActiveLink('catalogLink');
     
     const data = await api.getAllFurnitures();
     

@@ -34,6 +34,7 @@ export async function myFurniturePage(ctx) {
     const furnitures = await api.getMyFurnitures();
 
     ctx.render(myFurnitureTemplate(furnitures));
+    ctx.setActiveLink('myPublications');
 }
 
 function fixLocalPath(imgSrc) {

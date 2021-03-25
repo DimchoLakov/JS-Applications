@@ -63,6 +63,7 @@ const createTemplate = (onSubmit,
 
 export function createPage(ctx) {
     ctx.render(createTemplate(onSubmit));
+    ctx.setActiveLink('createLink');
 
     async function onSubmit(event) {
         event.preventDefault();
