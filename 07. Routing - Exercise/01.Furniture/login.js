@@ -18,11 +18,11 @@ const loginTemplate = (onSubmit, errorMessage, isEmailInvalid, isPasswordInvalid
                 </div>` : ''}
                 <div class="form-group">
                     <label class="form-control-label" for="email">Email</label>
-                    <input class=${classMap(getValidationClasses(isEmailInvalid))} id="email" type="text" name="email">
+                    <input class=${classMap(getValidationClasses(isEmailInvalid))} autocomplete="on" id="email" type="text" name="email">
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" for="password">Password</label>
-                    <input class=${classMap(getValidationClasses(isPasswordInvalid))} id="password" type="password"
+                    <input class=${classMap(getValidationClasses(isPasswordInvalid))} autocomplete="on" id="password" type="password"
                         name="password">
                 </div>
                 <input type="submit" class="btn btn-primary" value="Login" />

@@ -18,16 +18,16 @@ const registerTemplate = (onSubmit, errorMessage, isEmailInvalid, isPasswordInva
                 </div>` : ''}
                 <div class="form-group">
                     <label class="form-control-label" for="email">Email</label>
-                    <input class=${classMap(getValidationClasses(isEmailInvalid))} id="email" type="text" name="email">
+                    <input class=${classMap(getValidationClasses(isEmailInvalid))} autocomplete="on" id="email" type="text" name="email">
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" for="password">Password</label>
-                    <input class=${classMap(getValidationClasses(isPasswordInvalid))} id="password" type="password"
+                    <input class=${classMap(getValidationClasses(isPasswordInvalid))} autocomplete="on" id="password" type="password"
                         name="password">
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" for="rePass">Repeat</label>
-                    <input class=${classMap(getValidationClasses(isConfirmPasswordInvalid))} id="rePass" type="password"
+                    <input class=${classMap(getValidationClasses(isConfirmPasswordInvalid))} autocomplete="on" id="rePass" type="password"
                         name="rePass">
                 </div>
                 <input type="submit" class="btn btn-primary" value="Register" />
