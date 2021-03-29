@@ -50,7 +50,6 @@ function setActiveLink(elementId) {
     const navLinks = [...document.querySelectorAll('nav a')];
     navLinks.forEach(e => e.classList.remove('active'));
 
-    console.log(navLinks)
     const activeLink = navLinks.find(e => e.id === elementId);
     activeLink.classList.add('active');
 }
