@@ -1,7 +1,7 @@
 import * as api from './data.js';
 
-export function logout(ctx) {
-    api.logout();
+export async function logout(ctx) {
+    await api.logout();
 
     ctx.page.redirect('/');
 }
